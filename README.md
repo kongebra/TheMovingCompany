@@ -76,7 +76,7 @@ Modify an order
 | note | string | Note for the sales consultant for this order | false |
 
 ### Delete Order
-#### `DELETE` /api/orders/{order.io}
+#### `DELETE` /api/orders/{order.id}
 Delete an order
 #### JSON parameters
 | FIELD | TYPE | DESCRIPTION | REQUIRED |
