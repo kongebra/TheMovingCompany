@@ -35,6 +35,7 @@ Returns a single `Order` object
 {
     "id": 432,
     "customer": {
+        "id": 3,
         "name": "Kari Hansen",
         "phone": "+47 99 88 77 66",
         "email": "kari@hansen.no"
