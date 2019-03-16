@@ -14,6 +14,7 @@ namespace TheMovingCompany.Controllers {
         public OrdersController(OrderContext context) {
             _context = context;
 
+            // TODO (Svein): Remove when going live
             if (_context.Orders.Count() == 0) {
                 _context.Orders.Add(
                     new Order {
