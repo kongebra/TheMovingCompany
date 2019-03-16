@@ -1,43 +1,10 @@
 <div class="container-fluid">
-	
 	<h1 class="display-4">The Moving Company</h1>
-
 	<hr>
-
 	<nav class="nav nav-pills nav-fill mb-3">
-		<a href="#" class="nav-item nav-link active">See Orders</a>
-		<a href="#" class="nav-item nav-link">Create new Order</a>
+		<a class="nav-item nav-link" [routerLink]="[ '/orders' ]" routerLinkActive="active">Orders</a>
+		<a class="nav-item nav-link" [routerLink]="[ '/orders/new' ]" routerLinkActive="active">Create new Order</a>
+		<a class="nav-item nav-link" [routerLink]="[ '/customers' ]" routerLinkActive="active">Customers</a>
 	</nav>
-
-	<hr>
-
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Service</th>
-				<th>Due Date</th>
-				<th>Customer</th>
-				<th>Note</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let order of orders">
-				<td>{{id}}</td>
-				<td>{{service}}</td>
-				<td>{{dueDate}}</td>
-				<td>{{customerId}}</td>
-				<td>{{note}}</td>
-				<td>
-					<div class="btn-group btn-group-sm">
-						<a href="#" class="btn btn-info">Details</a>
-						<a href="#" class="btn btn-warning">Update</a>
-						<a href="#" class="btn btn-danger">Delete</a>
-					</div>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-
+	<router-outlet></router-outlet>
 </div>
