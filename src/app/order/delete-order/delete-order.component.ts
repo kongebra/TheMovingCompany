@@ -15,15 +15,15 @@ export class DeleteOrderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    let id = this.route.snapshot.paramMap.get('id');
-    this.deleteOrder(parseInt(id));
+    let id = this.route.snapshot.params.id;
+    this.deleteOrder(id);
   }
 
-  deleteOrder(id: number) {
+  deleteOrder(id) {
     this.service.deleteOrder(id).subscribe(() => {
 
     }, err => console.error(err), () => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/orders']);
     });
   }
 
