@@ -1,3 +1,44 @@
-<p>
-  single-order works!
-</p>
+<a class="btn btn-outline-dark mb-3" [routerLink]="[ '/orders' ]">See all Orders</a>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ID</td>
+      <td>{{order.id}}</td>
+    </tr>
+    <tr>
+      <td>Service</td>
+      <td>{{order.service}}</td>
+    </tr>
+    <tr>
+      <td>Created</td>
+      <td>{{order.created}}</td>
+    </tr>
+    <tr>
+      <td>Due Date</td>
+      <td>{{order.dueDate}}</td>
+    </tr>
+    <tr>
+      <td>Address (From)</td>
+      <td>{{order.addressFrom}}</td>
+    </tr>
+    <tr>
+      <td>Address (To)</td>
+      <td>{{order.addressTo}}</td>
+    </tr>
+    <tr>
+      <td>Customer</td>
+      <td><a [routerLink]="[ '/customers/view/', order.customer.id ]">{{order.customer.name}}</a></td>
+    </tr>
+    <tr>
+      <td>Notes</td>
+      <td>{{order.note}}</td>
+    </tr>
+  </tbody>
+</table>
