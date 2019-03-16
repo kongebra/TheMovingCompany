@@ -1,3 +1,7 @@
+<h1 class="display-4">Order Details</h1>
+
+<hr>
+
 <a class="btn btn-outline-dark mb-3" [routerLink]="[ '/orders' ]">See all Orders</a>
 
 <table class="table table-striped">
@@ -42,3 +46,5 @@
     </tr>
   </tbody>
 </table>
+
+<a class="btn btn-warning btn-block" [routerLink]="[ '/orders/update/', order.id ]">Update Order Details</a>
