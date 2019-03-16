@@ -4,3 +4,19 @@
 
 <a class="btn btn-outline-dark mb-3" [routerLink]="[ '/customers' ]">See all Customers</a>
 
+<form id="postForm" name="postForm" #heroForm="ngForm" (ngSubmit)="postCustomer()">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" [(ngModel)]="customer.name" name="name" id="name" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" [(ngModel)]="customer.email" name="email" id="email" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="tel" [(ngModel)]="customer.phone" name="phone" id="phone" class="form-control" required>
+    </div>
+
+    <input type="submit" class="btn btn-success btn-block btn-lg">
+</form>
