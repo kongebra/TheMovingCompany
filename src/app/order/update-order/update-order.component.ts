@@ -30,31 +30,27 @@ export class UpdateOrderComponent implements OnInit {
 	}
 
 	getOrder(id) {
-		this.orderService.getOrder(id).subscribe(order => {
-			this.order = order;
-		}, err => console.error(err), () => {
+		this.orderService.getOrder(id)
+			.subscribe(order => this.order = order, err => console.error(err), () => {
 			this.getCustomer(this.order.customerId);
-		})
+		});
 	}
 
 	putOrder() {
-		this.orderService.putOrder(this.id, this.order).subscribe(() => {
-
-		}, err => console.error(err), () => {
+		this.orderService.putOrder(this.id, this.order)
+			.subscribe(() => {}, err => console.error(err), () => {
 			this.router.navigate(['/orders']);
 		});
 	}
 
 	getCustomer(id) {
-		this.customerService.getCustomer(id).subscribe(customer => {
-			this.order.customer = customer;
-		});
+		this.customerService.getCustomer(id)
+			.subscribe(customer => this.order.customer = customer);
 	}
 
 	getCustomers() {
-		this.customerService.getCustomers().subscribe(customers => {
-			this.customers = customers;
-		})
+		this.customerService.getCustomers()
+			.subscribe(customers => this.customers = customers);
 	}
 
 }

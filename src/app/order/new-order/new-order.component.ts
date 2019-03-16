@@ -27,9 +27,8 @@ export class NewOrderComponent implements OnInit {
 	}
 
 	postOrder() {
-		this.orderService.postOrder(this.order).subscribe(() => {
-			
-		}, err => console.error(err), () => {
+		this.orderService.postOrder(this.order)
+			.subscribe(() => {}, err => console.error(err), () => {
 			this.router.navigate(['/orders']);
 		});
 	}

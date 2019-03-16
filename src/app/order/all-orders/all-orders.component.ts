@@ -21,13 +21,13 @@ export class AllOrdersComponent implements OnInit {
 	}
 
 	getOrders() {
-		this.orderService.getOrders().subscribe(orders => {
-			this.orders = orders;
-		}, err => console.error(err), () => {
+		this.orderService.getOrders()
+			.subscribe(orders => this.orders = orders, err => console.error(err), () => {
 			this.orders.forEach(order => {
-				this.customerService.getCustomer(order.customerId).subscribe(customer => {
-					order.customer = customer;
-				}, err => console.error(err), () => {});
+				this.customerService.getCustomer(order.customerId)
+					.subscribe(customer => order.customer = customer, err => console.error(err), () => {
+
+				});
 			});
 		});
 	}

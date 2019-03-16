@@ -25,14 +25,16 @@ export class SingleCustomerComponent implements OnInit {
 	}
 
 	getCustomer(id) {
-		this.customerService.getCustomer(id).subscribe(customer => this.customer = customer, err => console.error(err), () => {
+		this.customerService.getCustomer(id)
+			.subscribe(customer => this.customer = customer, err => console.error(err), () => {
 			this.getOrders();
 		});
 	}
 
 	getOrders() {
 		let orders: Order[];
-		this.orderService.getOrders().subscribe(o => orders = o, err => console.error(err), () => {
+		this.orderService.getOrders()
+			.subscribe(o => orders = o, err => console.error(err), () => {
 			this.customer.orders = orders.filter(e => {
 				return e.customerId == this.customer.id;
 			});

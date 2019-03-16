@@ -24,16 +24,16 @@ export class SingleOrderComponent implements OnInit {
   }
 
   getOrder(id) {
-    this.orderService.getOrder(id).subscribe((order) => {
-      this.order = order;
-    }, (err) => { console.error(err); }, () => {
+    this.orderService.getOrder(id)
+      .subscribe(order => this.order = order, err => console.error(err), () => {
       this.getCustomer(this.order.customerId);
     });
   }
 
   getCustomer(id) {
-    this.customerService.getCustomer(id).subscribe((customer) => {
-      this.order.customer = customer;
-    }, (err) => { console.error(err); }, () => {});
+    this.customerService.getCustomer(id)
+      .subscribe(customer => this.order.customer = customer, err => console.error(err), () => {
+
+    });
   }
 }
