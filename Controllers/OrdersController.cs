@@ -58,6 +58,7 @@ namespace TheMovingCompany.Controllers {
         // POST: api/orders
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order item) {
+            item.Created = System.DateTime.Now; // Set current time
             _context.Orders.Add(item);
             await _context.SaveChangesAsync();
 
