@@ -10,6 +10,7 @@ import { UpdateComponent } from './order/update/update.component';
 import { AllComponent } from './order/all/all.component';
 import { SingleComponent } from './order/single/single.component';
 import { AppRoutingModule } from './app-routing.module';
+import { EnumToArrayPipe } from './order/enum-to-array.pipe';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
     UpdateComponent,
     AllComponent,
     SingleComponent,
+    EnumToArrayPipe,
   ],
   imports: [
     BrowserModule,
