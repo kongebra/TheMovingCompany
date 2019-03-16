@@ -55,29 +55,29 @@ Returns a single `Order` object
 #### `POST` /api/orders
 Create a new order
 #### JSON parameters
-| FIELD | TYPE | DESCRIPTION | REQUIRED |
-| ----- | ---- | ----------- | -------- |
-| addressFrom | string | ... | true |
-| addressTo | string | ... | true |
-| dueDate | DateTime | ... | true |
-| created | DateTime | ... | true |
-| service | EService | ... | true |
-| note | string | ... | false |
-| customer | Customer | ... | true |
+| FIELD       | TYPE     | DESCRIPTION | REQUIRED |
+| ----------- | -------- | ----------- | -------- |
+| addressFrom | string   | ........... | true     |
+| addressTo   | string   | ........... | true     |
+| dueDate     | DateTime | ........... | true     |
+| created     | DateTime | ........... | true     |
+| service     | EService | ........... | true     |
+| note        | string   | ........... | false    |
+| customer    | Customer | ........... | true     |
 
 ### Modify Order
 #### `PUT` /api/orders/{order.id}
 Modify an order
 #### JSON parameters
-| FIELD | TYPE | DESCRIPTION | REQUIRED |
-| ----- | ---- | ----------- | -------- |
-| addressFrom | string | ... | true |
-| addressTo | string | ... | true |
-| dueDate | DateTime | ... | true |
-| created | DateTime | ... | true |
-| service | EService | ... | true |
-| note | string | ... | false |
-| customer | Customer | ... | true |
+| FIELD       | TYPE     | DESCRIPTION | REQUIRED |
+| ----------- | -------- | ----------- | -------- |
+| addressFrom | string   | ........... | true     |
+| addressTo   | string   | ........... | true     |
+| dueDate     | DateTime | ........... | true     |
+| created     | DateTime | ........... | true     |
+| service     | EService | ........... | true     |
+| note        | string   | ........... | false    |
+| customer    | Customer | ........... | true     |
 
 ### Delete Order
 #### `DELETE` /api/orders/{order.id}
@@ -85,7 +85,7 @@ Delete an order
 #### JSON parameters
 | FIELD | TYPE | DESCRIPTION | REQUIRED |
 | ----- | ---- | ----------- | -------- |
-| id | int | Order id | true |
+| id    | long | Order id    | true     |
 
 # Angular
 ## Development server
