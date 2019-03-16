@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { UpdateComponent } from './order/update/update.component';
 import { AppRoutingModule } from './app-routing.module';
 import { EnumToArrayPipe } from './order/enum-to-array.pipe';
 import { AllCustomersComponent } from './customer/all-customers/all-customers.component';
@@ -22,7 +21,6 @@ import { DeleteOrderComponent } from './order/delete-order/delete-order.componen
 @NgModule({
   declarations: [
     AppComponent,
-    UpdateComponent,
     EnumToArrayPipe,
     AllCustomersComponent,
     AllOrdersComponent,
