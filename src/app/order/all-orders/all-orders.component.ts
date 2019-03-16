@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../order.service';
 import { Order } from '../order';
+import { CustomerService } from 'src/app/customer/customer.service';
 
 @Component({
   selector: 'app-all-orders',
@@ -8,7 +9,10 @@ import { Order } from '../order';
   styleUrls: ['./all-orders.component.scss']
 })
 export class AllOrdersComponent implements OnInit {
-  constructor(private service: OrderService) { }
+  constructor(
+		private orderService: OrderService,
+		private customerService: CustomerService,
+	) {}
 
 	orders: Order[] = [];
 
@@ -17,6 +21,14 @@ export class AllOrdersComponent implements OnInit {
 	}
 
 	getOrders() {
-		this.service.getOrders().subscribe(orders => this.orders = orders);
+		this.orderService.getOrders().subscribe(orders => {
+			this.orders = orders;
+		}, err => console.error(err), () => {
+			this.orders.forEach(order => {
+				this.customerService.getCustomer(order.customerId).subscribe(customer => {
+					order.customer = customer;
+				}, err => console.error(err), () => {});
+			});
+		});
 	}
 }
