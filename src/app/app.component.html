@@ -1,17 +1,10 @@
-<div class="container-fluid">
-	<h1 class="display-4">The Moving Company</h1>
-	
-	<hr>
-	
-	<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+<div class="container-fluid pt-3">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
 		<a class="navbar-brand" [routerLink]="[ '/' ]">The Moving Company</a>
 
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item">
 				<a class="nav-link" [routerLink]="[ '/orders' ]" routerLinkActive="active">Orders</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" [routerLink]="[ '/orders/new' ]" routerLinkActive="active">Create new Order</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" [routerLink]="[ '/customers' ]" routerLinkActive="active">Customers</a>
