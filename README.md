@@ -24,11 +24,7 @@ Have been working primarly with Angular, to learn the framework more, and get mo
 
 ## Day 3
 
-
-
-# API Planning
-Before starting the programming I want to make a layout of how I wish the REST API to be looking. Starting with the most basic (CRUD) so the sales consultant can see all orders, specific orders, update them, and delete them.
-
+# API 
 ## Requests
 ### API Information
 ### Get All Orders
