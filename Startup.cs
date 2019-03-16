@@ -17,9 +17,16 @@ namespace TheMovingCompany {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
+            services.AddCors();
+
             services.AddDbContext<OrderContext> (opt => opt.UseInMemoryDatabase ("Orders"));
 
-            services.AddMvc ().SetCompatibilityVersion (CompatibilityVersion.Version_2_1);
+            services.AddMvc ()
+                .SetCompatibilityVersion (CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(options => {
+                    options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +46,14 @@ namespace TheMovingCompany {
                     await next();
                 }
             });
+
+            // Should not be needed when .NET runs the Angular app aswell
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+            );
 
             app.UseMvcWithDefaultRoute();
             app.UseDefaultFiles();
