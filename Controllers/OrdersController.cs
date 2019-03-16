@@ -23,14 +23,7 @@ namespace TheMovingCompany.Controllers {
                         Created = System.DateTime.Now,
                         Service = EService.PACKING,
                         Note = "Lorem ipsum dolor sit amet.",
-
                         CustomerId = 1L,
-                        Customer = new Customer {
-                            Id = 1L,
-                            Name = "John Doe",
-                            Email = "john@doe.com",
-                            Phone = "+47 99 88 77 66",
-                        },
                     }
                 );
                 _context.SaveChanges();

@@ -20,6 +20,7 @@ namespace TheMovingCompany {
             services.AddCors();
 
             services.AddDbContext<OrderContext> (opt => opt.UseInMemoryDatabase ("Orders"));
+            services.AddDbContext<CustomerContext> (opt => opt.UseInMemoryDatabase ("Customers"));
 
             services.AddMvc ()
                 .SetCompatibilityVersion (CompatibilityVersion.Version_2_1)

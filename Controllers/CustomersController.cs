@@ -8,16 +8,15 @@ using TheMovingCompany.Models;
 namespace TheMovingCompany.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase {
+    public class CustomersController : ControllerBase {
         private readonly CustomerContext _context;
 
-        public CustomerController(CustomerContext context) {
+        public CustomersController(CustomerContext context) {
             _context = context;
 
             if (_context.Customers.Count() == 0) {
                 _context.Customers.Add(
                     new Customer {
-                        Id = 1L,
                         Name = "John Doe",
                         Email = "john@doe.com",
                         Phone = "+47 99 88 77 66",
