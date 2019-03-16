@@ -8,7 +8,11 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./delete-order.component.scss']
 })
 export class DeleteOrderComponent implements OnInit {
-  constructor(private service: OrderService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private service: OrderService, 
+    private router: Router, 
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');

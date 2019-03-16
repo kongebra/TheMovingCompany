@@ -12,7 +12,10 @@ import { CustomerService } from 'src/app/customer/customer.service';
   styleUrls: ['./new-order.component.scss']
 })
 export class NewOrderComponent implements OnInit {
-  constructor(private orderService: OrderService, private customerService: CustomerService, private router: Router) { }
+  constructor(
+		private orderService: OrderService, 
+		private customerService: CustomerService, 
+		private router: Router) { }
 
 	order: Order;
 	customers: Customer[] = [];
