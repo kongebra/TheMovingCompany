@@ -230,7 +230,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<a class=\"btn btn-success mb-3\" [routerLink]=\"[ '/customers/new' ]\">Create new Customer</a>\n\n<table class=\"table table-striped\">\n    <thead>\n      <tr>\n        <th>ID</th>\n        <th>Name</th>\n        <th>Email</th>\n        <th>Phone</th>\n        <th>Orders</th>\n        <th>Actions</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr *ngFor=\"let customer of customers\">\n        <td>{{customer.id}}</td>\n        <td>{{customer.name}}</td>\n        <td><a href=\"mailto:{{customer.email}}\">{{customer.email}}</a></td>\n        <td><a href=\"tel:{{customer.phone}}\">{{customer.phone}}</a></td>\n        <td><code>UNDER DEVELOPMENT</code></td>\n        <td>\n          <div class=\"btn-group btn-group-sm\">\n              <a class=\"btn btn-info\" [routerLink]=\"[ '/customers/view/', customer.id ]\">Details</a>\n              <a class=\"btn btn-warning\" [routerLink]=\"[ '/customers/update/', customer.id ]\">Update</a>\n              <a class=\"btn btn-danger\" [routerLink]=\"[ '/customers/delete/', customer.id ]\">Delete</a>\n          </div>\n        </td>\n      </tr>\n    </tbody>\n  </table>"
+module.exports = "<h1 class=\"display-4\">Customers</h1>\n\n<hr>\n\n<a class=\"btn btn-success mb-3\" [routerLink]=\"[ '/customers/new' ]\">Create new Customer</a>\n\n<table class=\"table table-striped table-responsive-md\">\n    <thead>\n      <tr>\n        <th>ID</th>\n        <th>Name</th>\n        <th>Email</th>\n        <th>Phone</th>\n        <th>Orders</th>\n        <th>Actions</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr *ngFor=\"let customer of customers\">\n        <td>{{customer.id}}</td>\n        <td>{{customer.name}}</td>\n        <td><a href=\"mailto:{{customer.email}}\">{{customer.email}}</a></td>\n        <td><a href=\"tel:{{customer.phone}}\">{{customer.phone}}</a></td>\n        <td>{{customer.orders?.length || '0'}}</td>\n        <td>\n          <div class=\"btn-group btn-group-sm\">\n              <a class=\"btn btn-info\" [routerLink]=\"[ '/customers/view/', customer.id ]\">Details</a>\n              <a class=\"btn btn-warning\" [routerLink]=\"[ '/customers/update/', customer.id ]\">Update</a>\n              <a class=\"btn btn-danger\" [routerLink]=\"[ '/customers/delete/', customer.id ]\">Delete</a>\n          </div>\n        </td>\n      </tr>\n    </tbody>\n  </table>"
 
 /***/ }),
 
@@ -258,20 +258,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _customer_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../customer.service */ "./src/app/customer/customer.service.ts");
+/* harmony import */ var src_app_order_order_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/order/order.service */ "./src/app/order/order.service.ts");
+
 
 
 
 var AllCustomersComponent = /** @class */ (function () {
-    function AllCustomersComponent(customerService) {
+    function AllCustomersComponent(customerService, orderService) {
         this.customerService = customerService;
+        this.orderService = orderService;
         this.customers = [];
     }
     AllCustomersComponent.prototype.ngOnInit = function () {
         this.getCustomers();
+        this.getOrders();
     };
     AllCustomersComponent.prototype.getCustomers = function () {
         var _this = this;
         this.customerService.getCustomers().subscribe(function (customers) { return _this.customers = customers; });
+    };
+    AllCustomersComponent.prototype.getOrders = function () {
+        var _this = this;
+        var orders;
+        this.orderService.getOrders()
+            .subscribe(function (o) { return orders = o; }, function (err) { return console.error(err); }, function () {
+            _this.customers.forEach(function (customer) {
+                customer.orders = orders.filter(function (e) {
+                    return e.customerId == customer.id;
+                });
+            });
+        });
     };
     AllCustomersComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -279,7 +295,8 @@ var AllCustomersComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./all-customers.component.html */ "./src/app/customer/all-customers/all-customers.component.html"),
             styles: [__webpack_require__(/*! ./all-customers.component.scss */ "./src/app/customer/all-customers/all-customers.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_customer_service__WEBPACK_IMPORTED_MODULE_2__["CustomerService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_customer_service__WEBPACK_IMPORTED_MODULE_2__["CustomerService"],
+            src_app_order_order_service__WEBPACK_IMPORTED_MODULE_3__["OrderService"]])
     ], AllCustomersComponent);
     return AllCustomersComponent;
 }());
@@ -338,6 +355,26 @@ var CustomerService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/customer/customer.ts":
+/*!**************************************!*\
+  !*** ./src/app/customer/customer.ts ***!
+  \**************************************/
+/*! exports provided: Customer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Customer", function() { return Customer; });
+var Customer = /** @class */ (function () {
+    function Customer() {
+    }
+    return Customer;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/customer/delete-customer/delete-customer.component.html":
 /*!*************************************************************************!*\
   !*** ./src/app/customer/delete-customer/delete-customer.component.html ***!
@@ -345,7 +382,7 @@ var CustomerService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  delete-customer works!\n</p>\n"
+module.exports = ""
 
 /***/ }),
 
@@ -372,12 +409,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DeleteCustomerComponent", function() { return DeleteCustomerComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _customer_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../customer.service */ "./src/app/customer/customer.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
+
 
 
 var DeleteCustomerComponent = /** @class */ (function () {
-    function DeleteCustomerComponent() {
+    function DeleteCustomerComponent(customerService, router, route) {
+        this.customerService = customerService;
+        this.router = router;
+        this.route = route;
     }
     DeleteCustomerComponent.prototype.ngOnInit = function () {
+        var id = this.route.snapshot.params.id;
+        this.deleteCustomer(id);
+    };
+    DeleteCustomerComponent.prototype.deleteCustomer = function (id) {
+        var _this = this;
+        this.customerService.deleteCustomer(id)
+            .subscribe(function () { }, function (err) { return console.error(err); }, function () {
+            _this.router.navigate(['/customers']);
+        });
     };
     DeleteCustomerComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -385,7 +438,9 @@ var DeleteCustomerComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./delete-customer.component.html */ "./src/app/customer/delete-customer/delete-customer.component.html"),
             styles: [__webpack_require__(/*! ./delete-customer.component.scss */ "./src/app/customer/delete-customer/delete-customer.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_customer_service__WEBPACK_IMPORTED_MODULE_2__["CustomerService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]])
     ], DeleteCustomerComponent);
     return DeleteCustomerComponent;
 }());
@@ -401,7 +456,7 @@ var DeleteCustomerComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  new-customer works!\n</p>\n"
+module.exports = "<h1 class=\"display-4\">New Customer</h1>\n\n<hr>\n\n<a class=\"btn btn-outline-dark mb-3\" [routerLink]=\"[ '/customers' ]\">See all Customers</a>\n\n<form id=\"postForm\" name=\"postForm\" #heroForm=\"ngForm\" (ngSubmit)=\"postCustomer()\">\n    <div class=\"form-group\">\n        <label for=\"name\">Name</label>\n        <input type=\"text\" [(ngModel)]=\"customer.name\" name=\"name\" id=\"name\" class=\"form-control\" required>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"email\">Email</label>\n        <input type=\"email\" [(ngModel)]=\"customer.email\" name=\"email\" id=\"email\" class=\"form-control\" required>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"phone\">Phone</label>\n        <input type=\"tel\" [(ngModel)]=\"customer.phone\" name=\"phone\" id=\"phone\" class=\"form-control\" required>\n    </div>\n\n    <input type=\"submit\" class=\"btn btn-success btn-block btn-lg\">\n</form>"
 
 /***/ }),
 
@@ -428,12 +483,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NewCustomerComponent", function() { return NewCustomerComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _customer_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../customer.service */ "./src/app/customer/customer.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _customer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../customer */ "./src/app/customer/customer.ts");
+
+
+
 
 
 var NewCustomerComponent = /** @class */ (function () {
-    function NewCustomerComponent() {
+    function NewCustomerComponent(customerService, router) {
+        this.customerService = customerService;
+        this.router = router;
     }
     NewCustomerComponent.prototype.ngOnInit = function () {
+        this.customer = new _customer__WEBPACK_IMPORTED_MODULE_4__["Customer"]();
+    };
+    NewCustomerComponent.prototype.postCustomer = function () {
+        var _this = this;
+        this.customerService.postCustomer(this.customer)
+            .subscribe(function () { }, function (err) { return console.error(err); }, function () {
+            _this.router.navigate(['/customers']);
+        });
     };
     NewCustomerComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -441,7 +512,8 @@ var NewCustomerComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./new-customer.component.html */ "./src/app/customer/new-customer/new-customer.component.html"),
             styles: [__webpack_require__(/*! ./new-customer.component.scss */ "./src/app/customer/new-customer/new-customer.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_customer_service__WEBPACK_IMPORTED_MODULE_2__["CustomerService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], NewCustomerComponent);
     return NewCustomerComponent;
 }());
@@ -457,7 +529,7 @@ var NewCustomerComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  single-customer works!\n</p>\n"
+module.exports = "<h1 class=\"display-4\">Customer Details</h1>\n\n<hr>\n\n<a class=\"btn btn-outline-dark mb-3\" [routerLink]=\"[ '/customers' ]\">See all Customers</a>\n\n<table class=\"table table-striped\">\n    <thead>\n        <tr>\n            <th>Key</th>\n            <th>Value</th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr>\n            <td>ID</td>\n            <td>{{customer.id}}</td>\n        </tr>\n        <tr>\n            <td>Name</td>\n            <td>{{customer.name}}</td>\n        </tr>\n        <tr>\n            <td>Email</td>\n            <td><a href=\"mailto:{{customer.email}}\">{{customer.email}}</a></td>\n        </tr>\n        <tr>\n            <td>Phone</td>\n            <td><a href=\"tel:{{customer.phone}}\">{{customer.phone}}</a></td>\n        </tr>\n    </tbody>\n</table>\n\n<a class=\"btn btn-warning btn-block\" [routerLink]=\"[ '/customers/update/', customer.id ]\">Update Customer Details</a>\n\n<hr>\n\n<h2 class=\"mb-3\">Orders by {{customer.name}} ({{customer.orders?.length || '0'}})</h2>\n\n<table class=\"table table-striped table-responsive-md\">\n    <thead>\n        <tr>\n            <th>ID</th>\n            <th>Service</th>\n            <th>Created</th>\n            <th>Due Date</th>\n            <th>Address (From)</th>\n            <th>Address (To)</th>\n            <th>Note</th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr *ngFor=\"let order of customer.orders\">\n            <td>{{order.id}}</td>\n            <td>{{order.service}}</td>\n            <td>{{order.created}}</td>\n            <td>{{order.dueDate}}</td>\n            <td>{{order.addressFrom}}</td>\n            <td>{{order.addressTo}}</td>\n            <td>{{order.note}}</td>\n        </tr>\n    </tbody>\n</table>"
 
 /***/ }),
 
@@ -484,12 +556,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SingleCustomerComponent", function() { return SingleCustomerComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _customer_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../customer.service */ "./src/app/customer/customer.service.ts");
+/* harmony import */ var src_app_order_order_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/order/order.service */ "./src/app/order/order.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
+
+
 
 
 var SingleCustomerComponent = /** @class */ (function () {
-    function SingleCustomerComponent() {
+    function SingleCustomerComponent(customerService, orderService, route) {
+        this.customerService = customerService;
+        this.orderService = orderService;
+        this.route = route;
     }
     SingleCustomerComponent.prototype.ngOnInit = function () {
+        var id = this.route.snapshot.params.id;
+        this.getCustomer(id);
+    };
+    SingleCustomerComponent.prototype.getCustomer = function (id) {
+        var _this = this;
+        this.customerService.getCustomer(id)
+            .subscribe(function (customer) { return _this.customer = customer; }, function (err) { return console.error(err); }, function () {
+            _this.getOrders();
+        });
+    };
+    SingleCustomerComponent.prototype.getOrders = function () {
+        var _this = this;
+        var orders;
+        this.orderService.getOrders()
+            .subscribe(function (o) { return orders = o; }, function (err) { return console.error(err); }, function () {
+            _this.customer.orders = orders.filter(function (e) {
+                return e.customerId == _this.customer.id;
+            });
+        });
     };
     SingleCustomerComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -497,7 +597,9 @@ var SingleCustomerComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./single-customer.component.html */ "./src/app/customer/single-customer/single-customer.component.html"),
             styles: [__webpack_require__(/*! ./single-customer.component.scss */ "./src/app/customer/single-customer/single-customer.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_customer_service__WEBPACK_IMPORTED_MODULE_2__["CustomerService"],
+            src_app_order_order_service__WEBPACK_IMPORTED_MODULE_3__["OrderService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"]])
     ], SingleCustomerComponent);
     return SingleCustomerComponent;
 }());
@@ -513,7 +615,7 @@ var SingleCustomerComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  update-customer works!\n</p>\n"
+module.exports = "<h1 class=\"display-4\">Update Customer</h1>\n\n<hr>\n\n<a class=\"btn btn-outline-dark mb-3\" [routerLink]=\"[ '/customers' ]\">See all Customers</a>\n\n\n<form id=\"putForm\" name=\"putForm\" #heroForm=\"ngForm\" (ngSubmit)=\"putCustomer()\">\n    <div class=\"form-group\">\n        <label for=\"name\">Name</label>\n        <input type=\"text\" [(ngModel)]=\"customer.name\" name=\"name\" id=\"name\" class=\"form-control\" [value]=\"customer.name\" required>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"email\">Email</label>\n        <input type=\"email\" [(ngModel)]=\"customer.email\" name=\"email\" id=\"email\" class=\"form-control\" [value]=\"customer.email\" required>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"phone\">Phone</label>\n        <input type=\"tel\" [(ngModel)]=\"customer.phone\" name=\"phone\" id=\"phone\" class=\"form-control\" [value]=\"customer.phone\" required>\n    </div>\n\n    <input type=\"submit\" class=\"btn btn-success btn-block btn-lg\" value=\"Update\">\n</form>"
 
 /***/ }),
 
@@ -540,12 +642,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UpdateCustomerComponent", function() { return UpdateCustomerComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _customer_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../customer.service */ "./src/app/customer/customer.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
+
 
 
 var UpdateCustomerComponent = /** @class */ (function () {
-    function UpdateCustomerComponent() {
+    function UpdateCustomerComponent(customerService, route, router) {
+        this.customerService = customerService;
+        this.route = route;
+        this.router = router;
     }
     UpdateCustomerComponent.prototype.ngOnInit = function () {
+        this.id = this.route.snapshot.params.id;
+        this.getCustomer(this.id);
+    };
+    UpdateCustomerComponent.prototype.getCustomer = function (id) {
+        var _this = this;
+        this.customerService.getCustomer(id)
+            .subscribe(function (customer) { return _this.customer = customer; }, function (err) { return console.error(err); }, function () {
+        });
+    };
+    UpdateCustomerComponent.prototype.putCustomer = function () {
+        var _this = this;
+        this.customerService.putCustomer(this.id, this.customer)
+            .subscribe(function () { }, function (err) { return console.error(err); }, function () {
+            _this.router.navigate(['/customers']);
+        });
     };
     UpdateCustomerComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -553,7 +677,9 @@ var UpdateCustomerComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./update-customer.component.html */ "./src/app/customer/update-customer/update-customer.component.html"),
             styles: [__webpack_require__(/*! ./update-customer.component.scss */ "./src/app/customer/update-customer/update-customer.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_customer_service__WEBPACK_IMPORTED_MODULE_2__["CustomerService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], UpdateCustomerComponent);
     return UpdateCustomerComponent;
 }());
@@ -569,7 +695,7 @@ var UpdateCustomerComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<a class=\"btn btn-success mb-3\" [routerLink]=\"[ '/orders/new' ]\">Create new Order</a>\n\n<table class=\"table table-striped table-responsive-md\">\n    <thead>\n      <tr>\n        <th>ID</th>\n        <th>Service</th>\n        <th>Due Date</th>\n        <th>Customer</th>\n        <th>Note</th>\n        <th>Actions</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr *ngFor=\"let order of orders\">\n        <td>{{order.id}}</td>\n        <td>{{order.service}}</td>\n        <td>{{order.dueDate}}</td>\n        <td>\n          <a [routerLink]=\"[ '/customers/view/', order.customer.id ]\">{{order.customer.name}}</a>\n        </td>\n        <td>{{order.note}}</td>\n        <td>\n          <div class=\"btn-group btn-group-sm\">\n              <a class=\"btn btn-info\" [routerLink]=\"[ '/orders/view/', order.id ]\">Details</a>\n              <a class=\"btn btn-warning\" [routerLink]=\"[ '/orders/update/', order.id ]\">Update</a>\n              <a class=\"btn btn-danger\" [routerLink]=\"[ '/orders/delete/', order.id ]\">Delete</a>\n          </div>\n        </td>\n      </tr>\n    </tbody>\n  </table>"
+module.exports = "<h1 class=\"display-4\">Orders</h1>\n\n<hr>\n\n<a class=\"btn btn-success mb-3\" [routerLink]=\"[ '/orders/new' ]\">Create new Order</a>\n\n<table class=\"table table-striped table-responsive-md\">\n    <thead>\n\t\t<tr>\n\t\t\t<th>ID</th>\n\t\t\t<th>Service</th>\n\t\t\t<th>Due Date</th>\n\t\t\t<th>Customer</th>\n\t\t\t<th>Note</th>\n\t\t\t<th>Actions</th>\n\t\t</tr>\n    </thead>\n    <tbody>\n\t\t<tr *ngFor=\"let order of orders\">\n\t\t\t<td>{{order.id}}</td>\n\t\t\t<td>{{order.service}}</td>\n\t\t\t<td>{{order.dueDate}}</td>\n        \t<td>\n          \t\t<a [routerLink]=\"[ '/customers/view/', order.customer.id ]\">{{order.customer.name}}</a>\n        \t</td>\n        \t<td>{{order.note}}</td>\n        \t<td>\n\t\t\t\t<div class=\"btn-group btn-group-sm\">\n\t\t\t\t\t<a class=\"btn btn-info\" [routerLink]=\"[ '/orders/view/', order.id ]\">Details</a>\n\t\t\t\t\t<a class=\"btn btn-warning\" [routerLink]=\"[ '/orders/update/', order.id ]\">Update</a>\n\t\t\t\t\t<a class=\"btn btn-danger\" [routerLink]=\"[ '/orders/delete/', order.id ]\">Delete</a>\n\t\t\t\t</div>\n    \t\t</td>\n    \t</tr>\n    </tbody>\n</table>"
 
 /***/ }),
 
@@ -613,13 +739,12 @@ var AllOrdersComponent = /** @class */ (function () {
     };
     AllOrdersComponent.prototype.getOrders = function () {
         var _this = this;
-        this.orderService.getOrders().subscribe(function (orders) {
-            _this.orders = orders;
-        }, function (err) { return console.error(err); }, function () {
+        this.orderService.getOrders()
+            .subscribe(function (orders) { return _this.orders = orders; }, function (err) { return console.error(err); }, function () {
             _this.orders.forEach(function (order) {
-                _this.customerService.getCustomer(order.customerId).subscribe(function (customer) {
-                    order.customer = customer;
-                }, function (err) { return console.error(err); }, function () { });
+                _this.customerService.getCustomer(order.customerId)
+                    .subscribe(function (customer) { return order.customer = customer; }, function (err) { return console.error(err); }, function () {
+                });
             });
         });
     };
@@ -686,14 +811,14 @@ var DeleteOrderComponent = /** @class */ (function () {
         this.route = route;
     }
     DeleteOrderComponent.prototype.ngOnInit = function () {
-        var id = this.route.snapshot.paramMap.get('id');
-        this.deleteOrder(parseInt(id));
+        var id = this.route.snapshot.params.id;
+        this.deleteOrder(id);
     };
     DeleteOrderComponent.prototype.deleteOrder = function (id) {
         var _this = this;
-        this.service.deleteOrder(id).subscribe(function () {
-        }, function (err) { return console.error(err); }, function () {
-            _this.router.navigate(['/']);
+        this.service.deleteOrder(id)
+            .subscribe(function () { }, function (err) { return console.error(err); }, function () {
+            _this.router.navigate(['/orders']);
         });
     };
     DeleteOrderComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -773,7 +898,7 @@ var Eservice;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<a class=\"btn btn-outline-dark mb-3\" [routerLink]=\"[ '/orders' ]\">See all Orders</a>\n\n<form id=\"postForm\" name=\"postForm\" #heroForm=\"ngForm\" (ngSubmit)=\"postOrder()\">\n    <div class=\"form-group\">\n      <label for=\"addressFrom\">Address From</label>\n      <input type=\"text\" [(ngModel)]=\"order.addressFrom\" name=\"addressFrom\" id=\"addressFrom\" class=\"form-control\" required>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"addressTo\">Address To</label>\n      <input type=\"text\" [(ngModel)]=\"order.addressTo\" name=\"addressTo\" id=\"addressTo\" class=\"form-control\" required>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"dueDate\">Due Date</label>\n      <input type=\"date\" [(ngModel)]=\"order.dueDate\" name=\"dueDate\" id=\"dueDate\" class=\"form-control\" required>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"note\">Note</label>\n      <textarea [(ngModel)]=\"order.note\" name=\"note\" id=\"note\" class=\"form-control\"></textarea>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"service\">Service</label>\n      <select [(ngModel)]=\"order.service\" name=\"service\" id=\"service\" class=\"form-control\" required>\n        <option *ngFor=\"let item of services | enumToArray\" [value]=\"item\">{{item}}</option>\n      </select>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"customer\">Customer</label>\n      <select [(ngModel)]=\"order.customerId\" name=\"customerId\" id=\"customerId\" class=\"form-control\" required>\n        <option *ngFor=\"let customer of customers\" [value]=\"customer.id\">{{customer.name}}</option>\n      </select>\n    </div>\n    \n    <input type=\"submit\" class=\"btn btn-success btn-block btn-lg\">\n  </form>"
+module.exports = "<h1 class=\"display-4\">New Order</h1>\n\n<hr>\n\n<a class=\"btn btn-outline-dark mb-3\" [routerLink]=\"[ '/orders' ]\">See all Orders</a>\n\n<form id=\"postForm\" name=\"postForm\" #heroForm=\"ngForm\" (ngSubmit)=\"postOrder()\">\n    <div class=\"form-group\">\n      <label for=\"addressFrom\">Address From</label>\n      <input type=\"text\" [(ngModel)]=\"order.addressFrom\" name=\"addressFrom\" id=\"addressFrom\" class=\"form-control\" required>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"addressTo\">Address To</label>\n      <input type=\"text\" [(ngModel)]=\"order.addressTo\" name=\"addressTo\" id=\"addressTo\" class=\"form-control\" required>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"dueDate\">Due Date</label>\n      <input type=\"date\" [(ngModel)]=\"order.dueDate\" name=\"dueDate\" id=\"dueDate\" class=\"form-control\" required>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"note\">Note</label>\n      <textarea [(ngModel)]=\"order.note\" name=\"note\" id=\"note\" class=\"form-control\"></textarea>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"service\">Service</label>\n      <select [(ngModel)]=\"order.service\" name=\"service\" id=\"service\" class=\"form-control\" required>\n        <option *ngFor=\"let item of services | enumToArray\" [value]=\"item\">{{item}}</option>\n      </select>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"customer\">Customer</label>\n      <select [(ngModel)]=\"order.customerId\" name=\"customerId\" id=\"customerId\" class=\"form-control\" required>\n        <option *ngFor=\"let customer of customers\" [value]=\"customer.id\">{{customer.name}}</option>\n      </select>\n    </div>\n    \n    <input type=\"submit\" class=\"btn btn-success btn-block btn-lg\">\n  </form>"
 
 /***/ }),
 
@@ -827,8 +952,8 @@ var NewOrderComponent = /** @class */ (function () {
     };
     NewOrderComponent.prototype.postOrder = function () {
         var _this = this;
-        this.orderService.postOrder(this.order).subscribe(function () {
-        }, function (err) { return console.error(err); }, function () {
+        this.orderService.postOrder(this.order)
+            .subscribe(function () { }, function (err) { return console.error(err); }, function () {
             _this.router.navigate(['/orders']);
         });
     };
@@ -926,7 +1051,7 @@ var Order = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<a class=\"btn btn-outline-dark mb-3\" [routerLink]=\"[ '/orders' ]\">See all Orders</a>\n\n<table class=\"table table-striped\">\n  <thead>\n    <tr>\n      <th>Key</th>\n      <th>Value</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>ID</td>\n      <td>{{order.id}}</td>\n    </tr>\n    <tr>\n      <td>Service</td>\n      <td>{{order.service}}</td>\n    </tr>\n    <tr>\n      <td>Created</td>\n      <td>{{order.created}}</td>\n    </tr>\n    <tr>\n      <td>Due Date</td>\n      <td>{{order.dueDate}}</td>\n    </tr>\n    <tr>\n      <td>Address (From)</td>\n      <td>{{order.addressFrom}}</td>\n    </tr>\n    <tr>\n      <td>Address (To)</td>\n      <td>{{order.addressTo}}</td>\n    </tr>\n    <tr>\n      <td>Customer</td>\n      <td><a [routerLink]=\"[ '/customers/view/', order.customer.id ]\">{{order.customer.name}}</a></td>\n    </tr>\n    <tr>\n      <td>Notes</td>\n      <td>{{order.note}}</td>\n    </tr>\n  </tbody>\n</table>\n\n<a class=\"btn btn-warning btn-block\" [routerLink]=\"[ '/orders/update/', order.id ]\">Update Order</a>"
+module.exports = "<h1 class=\"display-4\">Order Details</h1>\n\n<hr>\n\n<a class=\"btn btn-outline-dark mb-3\" [routerLink]=\"[ '/orders' ]\">See all Orders</a>\n\n<table class=\"table table-striped table-responsive-md\">\n  <thead>\n    <tr>\n      <th>Key</th>\n      <th>Value</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>ID</td>\n      <td>{{order.id}}</td>\n    </tr>\n    <tr>\n      <td>Service</td>\n      <td>{{order.service}}</td>\n    </tr>\n    <tr>\n      <td>Created</td>\n      <td>{{order.created}}</td>\n    </tr>\n    <tr>\n      <td>Due Date</td>\n      <td>{{order.dueDate}}</td>\n    </tr>\n    <tr>\n      <td>Address (From)</td>\n      <td>{{order.addressFrom}}</td>\n    </tr>\n    <tr>\n      <td>Address (To)</td>\n      <td>{{order.addressTo}}</td>\n    </tr>\n    <tr>\n      <td>Customer</td>\n      <td><a [routerLink]=\"[ '/customers/view/', order.customer.id ]\">{{order.customer.name}}</a></td>\n    </tr>\n    <tr>\n      <td>Notes</td>\n      <td>{{order.note}}</td>\n    </tr>\n  </tbody>\n</table>\n\n<a class=\"btn btn-warning btn-block\" [routerLink]=\"[ '/orders/update/', order.id ]\">Update Order Details</a>"
 
 /***/ }),
 
@@ -973,17 +1098,16 @@ var SingleOrderComponent = /** @class */ (function () {
     };
     SingleOrderComponent.prototype.getOrder = function (id) {
         var _this = this;
-        this.orderService.getOrder(id).subscribe(function (order) {
-            _this.order = order;
-        }, function (err) { console.error(err); }, function () {
+        this.orderService.getOrder(id)
+            .subscribe(function (order) { return _this.order = order; }, function (err) { return console.error(err); }, function () {
             _this.getCustomer(_this.order.customerId);
         });
     };
     SingleOrderComponent.prototype.getCustomer = function (id) {
         var _this = this;
-        this.customerService.getCustomer(id).subscribe(function (customer) {
-            _this.order.customer = customer;
-        }, function (err) { console.error(err); }, function () { });
+        this.customerService.getCustomer(id)
+            .subscribe(function (customer) { return _this.order.customer = customer; }, function (err) { return console.error(err); }, function () {
+        });
     };
     SingleOrderComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -1009,7 +1133,7 @@ var SingleOrderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<a class=\"btn btn-outline-dark mb-3\" [routerLink]=\"[ '/orders' ]\">See all Orders</a>\n\n<form id=\"putForm\" name=\"putForm\" #heroForm=\"ngForm\" (ngSubmit)=\"putOrder()\">\n    <div class=\"form-group\">\n      <label for=\"addressFrom\">Address From</label>\n      <input type=\"text\" [(ngModel)]=\"order.addressFrom\" name=\"addressFrom\" id=\"addressFrom\" class=\"form-control\" [value]=\"order.addressFrom\" required>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"addressTo\">Address To</label>\n      <input type=\"text\" [(ngModel)]=\"order.addressTo\" name=\"addressTo\" id=\"addressTo\" class=\"form-control\" [value]=\"order.addressTo\" required>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"dueDate\">Due Date</label>\n      <input type=\"date\" [(ngModel)]=\"order.dueDate\" name=\"dueDate\" id=\"dueDate\" class=\"form-control\" [value]=\"order.dueDate\" required>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"note\">Note</label>\n      <textarea [(ngModel)]=\"order.note\" name=\"note\" id=\"note\" class=\"form-control\">{{order.note}}</textarea>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"service\">Service</label>\n      <select [(ngModel)]=\"order.service\" name=\"service\" id=\"service\" class=\"form-control\" required>\n        <option *ngFor=\"let item of services | enumToArray\" [value]=\"item\" ng-selected=\"order.service\">{{item}}</option>\n      </select>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"customer\">Customer</label>\n      <select [(ngModel)]=\"order.customerId\" name=\"customerId\" id=\"customerId\" class=\"form-control\" required>\n        <option *ngFor=\"let customer of customers\" [value]=\"customer.id\" ng-selected=\"order.customerId\">{{customer.name}}</option>\n      </select>\n    </div>\n    \n    <input type=\"submit\" class=\"btn btn-success btn-block btn-lg\" value=\"Update\">\n  </form>"
+module.exports = "<h1 class=\"display-4\">Update Order</h1>\n\n<hr>\n\n<a class=\"btn btn-outline-dark mb-3\" [routerLink]=\"[ '/orders' ]\">See all Orders</a>\n\n<form id=\"putForm\" name=\"putForm\" #heroForm=\"ngForm\" (ngSubmit)=\"putOrder()\">\n    <div class=\"form-group\">\n      <label for=\"addressFrom\">Address From</label>\n      <input type=\"text\" [(ngModel)]=\"order.addressFrom\" name=\"addressFrom\" id=\"addressFrom\" class=\"form-control\" [value]=\"order.addressFrom\" required>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"addressTo\">Address To</label>\n      <input type=\"text\" [(ngModel)]=\"order.addressTo\" name=\"addressTo\" id=\"addressTo\" class=\"form-control\" [value]=\"order.addressTo\" required>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"dueDate\">Due Date</label>\n      <input type=\"date\" [(ngModel)]=\"order.dueDate\" name=\"dueDate\" id=\"dueDate\" class=\"form-control\" [value]=\"order.dueDate\" required>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"note\">Note</label>\n      <textarea [(ngModel)]=\"order.note\" name=\"note\" id=\"note\" class=\"form-control\">{{order.note}}</textarea>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"service\">Service</label>\n      <select [(ngModel)]=\"order.service\" name=\"service\" id=\"service\" class=\"form-control\" required>\n        <option *ngFor=\"let item of services | enumToArray\" [value]=\"item\" ng-selected=\"order.service\">{{item}}</option>\n      </select>\n    </div>\n    \n    <div class=\"form-group\">\n      <label for=\"customer\">Customer</label>\n      <select [(ngModel)]=\"order.customerId\" name=\"customerId\" id=\"customerId\" class=\"form-control\" required>\n        <option *ngFor=\"let customer of customers\" [value]=\"customer.id\" ng-selected=\"order.customerId\">{{customer.name}}</option>\n      </select>\n    </div>\n    \n    <input type=\"submit\" class=\"btn btn-success btn-block btn-lg\" value=\"Update\">\n  </form>"
 
 /***/ }),
 
@@ -1055,36 +1179,33 @@ var UpdateOrderComponent = /** @class */ (function () {
         this.services = _eservice_enum__WEBPACK_IMPORTED_MODULE_5__["Eservice"];
     }
     UpdateOrderComponent.prototype.ngOnInit = function () {
-        this.id = this.route.snapshot.paramMap.get('id');
+        this.id = this.route.snapshot.params.id;
         this.getOrder(this.id);
         this.getCustomers();
     };
     UpdateOrderComponent.prototype.getOrder = function (id) {
         var _this = this;
-        this.orderService.getOrder(id).subscribe(function (order) {
-            _this.order = order;
-        }, function (err) { return console.error(err); }, function () {
+        this.orderService.getOrder(id)
+            .subscribe(function (order) { return _this.order = order; }, function (err) { return console.error(err); }, function () {
             _this.getCustomer(_this.order.customerId);
         });
     };
     UpdateOrderComponent.prototype.putOrder = function () {
         var _this = this;
-        this.orderService.putOrder(this.id, this.order).subscribe(function () {
-        }, function (err) { return console.error(err); }, function () {
+        this.orderService.putOrder(this.id, this.order)
+            .subscribe(function () { }, function (err) { return console.error(err); }, function () {
             _this.router.navigate(['/orders']);
         });
     };
     UpdateOrderComponent.prototype.getCustomer = function (id) {
         var _this = this;
-        this.customerService.getCustomer(id).subscribe(function (customer) {
-            _this.order.customer = customer;
-        });
+        this.customerService.getCustomer(id)
+            .subscribe(function (customer) { return _this.order.customer = customer; });
     };
     UpdateOrderComponent.prototype.getCustomers = function () {
         var _this = this;
-        this.customerService.getCustomers().subscribe(function (customers) {
-            _this.customers = customers;
-        });
+        this.customerService.getCustomers()
+            .subscribe(function (customers) { return _this.customers = customers; });
     };
     UpdateOrderComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
