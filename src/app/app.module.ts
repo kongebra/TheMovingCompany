@@ -8,6 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NewComponent } from './order/new/new.component';
 import { UpdateComponent } from './order/update/update.component';
 import { AllComponent } from './order/all/all.component';
+import { SingleComponent } from './order/single/single.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -15,11 +17,13 @@ import { AllComponent } from './order/all/all.component';
     NewComponent,
     UpdateComponent,
     AllComponent,
+    SingleComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
