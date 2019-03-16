@@ -31,8 +31,9 @@ export class SingleCustomerComponent implements OnInit {
 	}
 
 	getOrders() {
-		this.orderService.getOrders().subscribe(orders => this.customer.orders = orders, err => console.error(err), () => {
-			this.customer.orders.filter(e => {
+		let orders: Order[];
+		this.orderService.getOrders().subscribe(o => orders = o, err => console.error(err), () => {
+			this.customer.orders = orders.filter(e => {
 				return e.customerId == this.customer.id;
 			});
 		});
