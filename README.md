@@ -1,5 +1,14 @@
 # The Moving Company
 
+# Usage
+## Steps
+1. Build Angular application: `ng build`
+2. Run .NET application `dotnet run`
+3. Open browser and go to https://localhost:5001
+
+# Known bugs
+- [ ] Count of orders per customer on `/customers` goes to 0 if you go to `/customers` then to another page, then back. Not sure what causes this.
+
 # Choices for the exercises
 ## Day 1
 I haven't done any programming with .NET before, so it was brand new to me. I have been looking at a few tutorials and docs for this exercise, but I choose to follow the documents on APS.NET from Microsoft ([link](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-2.2&tabs=visual-studio-code)). As it was pretty simple, and did the tasks I needed it to do.
