@@ -29,9 +29,7 @@
     <div class="form-group">
       <label for="customer">Customer</label>
       <select [(ngModel)]="order.customerId" name="customerId" id="customerId" class="form-control" required>
-        <option value="1" selected>John Doe</option>
-        <option value="2">Jane Doe</option>
-        <!--<option ngFor="let customer in customers" [value]="customer.id">{{customer.name}}</option>-->
+        <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
       </select>
     </div>
     

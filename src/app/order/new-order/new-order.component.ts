@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Order } from '../order';
 import { Customer } from 'src/app/customer/customer';
 import { Eservice } from '../eservice.enum';
+import { CustomerService } from 'src/app/customer/customer.service';
 
 @Component({
   selector: 'app-new-order',
@@ -11,7 +12,7 @@ import { Eservice } from '../eservice.enum';
   styleUrls: ['./new-order.component.scss']
 })
 export class NewOrderComponent implements OnInit {
-  constructor(private orderService: OrderService, private router: Router) { }
+  constructor(private orderService: OrderService, private customerService: CustomerService, private router: Router) { }
 
 	order: Order;
 	customers: Customer[] = [];
@@ -19,11 +20,13 @@ export class NewOrderComponent implements OnInit {
 
 	ngOnInit() {
 		this.order = new Order();
-		this.customers = [];
+		this.customerService.getCustomers().subscribe(customers => this.customers = customers);
 	}
 
 	postOrder() {
 		this.orderService.postOrder(this.order).subscribe(() => {
+			
+		}, err => console.error(err), () => {
 			this.router.navigate(['/orders']);
 		});
 	}
