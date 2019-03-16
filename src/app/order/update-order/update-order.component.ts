@@ -24,7 +24,7 @@ export class UpdateOrderComponent implements OnInit {
 	services = Eservice;
 
 	ngOnInit() {
-		this.id = this.route.snapshot.paramMap.get('id');
+		this.id = this.route.snapshot.params.id
 		this.getOrder(this.id);
 		this.getCustomers();
 	}
