@@ -81,7 +81,7 @@ Create a new order
 | addressFrom | string   | ........... | true     |
 | addressTo   | string   | ........... | true     |
 | dueDate     | DateTime | ........... | true     |
-| created     | DateTime | ........... | true     |
+| created     | DateTime | ........... | false    |
 | service     | EService | ........... | true     |
 | note        | string   | ........... | false    |
 | customer    | Customer | ........... | true     |
@@ -95,7 +95,7 @@ Modify an order
 | addressFrom | string   | ........... | true     |
 | addressTo   | string   | ........... | true     |
 | dueDate     | DateTime | ........... | true     |
-| created     | DateTime | ........... | true     |
+| created     | DateTime | ........... | false    |
 | service     | EService | ........... | true     |
 | note        | string   | ........... | false    |
 | customer    | Customer | ........... | true     |
