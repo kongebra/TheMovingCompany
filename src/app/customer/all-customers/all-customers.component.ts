@@ -31,8 +31,7 @@ export class AllCustomersComponent implements OnInit {
 
 		this.orderService.getOrders().subscribe(o => orders = o, err => console.error(err), () => {
 			this.customers.forEach(customer => {
-				customer.orders = orders;
-				customer.orders.filter(e => {
+				customer.orders = orders.filter(e => {
 					return e.customerId == customer.id;
 				})
 			});
