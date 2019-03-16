@@ -15,7 +15,12 @@ Added Bootstrap as stying for the front-end application as I am very comfortable
 
 
 ## Day 2
+Added `Customer` to the API so with the same functions as Orders. So the front-end application would make more sense.
 
+Have been working primarly with Angular, to learn the framework more, and get more comfortable with it.
+### TODO
+- [ ] Need to read up on converting HTML `date` to `DateTime` objects in the REST API.
+- [ ] Check if customer exists before creating new order in the API
 
 ## Day 3
 
@@ -41,17 +46,11 @@ Returns an array of `Order` objects.
         "service": 2,
         "note": "Lorem ipsum dolor sit amet.",
         "customerId": 1,
-        "customer": {
-            "id": 1,
-            "name": "John Doe",
-            "email": "john@doe.com",
-            "phone": "+47 99 88 77 66"
-        }
     }
 ]
 ```
 ### Get Order
-#### `GET` /api/orders/{order.id}
+#### `GET` /api/orders/{id}
 Returns a single `Order` object
 #### Response example
 ```json
@@ -64,49 +63,99 @@ Returns a single `Order` object
     "service": 2,
     "note": "Lorem ipsum dolor sit amet.",
     "customerId": 1,
-    "customer": {
-        "id": 1,
-        "name": "John Doe",
-        "email": "john@doe.com",
-        "phone": "+47 99 88 77 66"
-    }
 }
 ```
 ### Add Order
 #### `POST` /api/orders
 Create a new order
 #### JSON parameters
-| FIELD       | TYPE     | DESCRIPTION | REQUIRED |
-| ----------- | -------- | ----------- | -------- |
-| addressFrom | string   | ........... | true     |
-| addressTo   | string   | ........... | true     |
-| dueDate     | DateTime | ........... | true     |
-| created     | DateTime | ........... | false    |
-| service     | EService | ........... | true     |
-| note        | string   | ........... | false    |
-| customer    | Customer | ........... | true     |
+| FIELD       | TYPE     | DESCRIPTION |
+| ----------- | -------- | ----------- |
+| addressFrom | string   | ........... |
+| addressTo   | string   | ........... |
+| dueDate     | DateTime | ........... |
+| created     | DateTime | ........... |
+| service     | EService | ........... |
+| note        | string   | ........... |
+| customer    | Customer | ........... |
 
 ### Modify Order
-#### `PUT` /api/orders/{order.id}
+#### `PUT` /api/orders/{id}
 Modify an order
 #### JSON parameters
-| FIELD       | TYPE     | DESCRIPTION | REQUIRED |
-| ----------- | -------- | ----------- | -------- |
-| addressFrom | string   | ........... | true     |
-| addressTo   | string   | ........... | true     |
-| dueDate     | DateTime | ........... | true     |
-| created     | DateTime | ........... | false    |
-| service     | EService | ........... | true     |
-| note        | string   | ........... | false    |
-| customer    | Customer | ........... | true     |
+| FIELD       | TYPE     | DESCRIPTION |
+| ----------- | -------- | ----------- |
+| addressFrom | string   | ........... |
+| addressTo   | string   | ........... |
+| dueDate     | DateTime | ........... |
+| created     | DateTime | ........... |
+| service     | EService | ........... |
+| note        | string   | ........... |
+| customer    | Customer | ........... |
 
 ### Delete Order
-#### `DELETE` /api/orders/{order.id}
+#### `DELETE` /api/orders/{id}
 Delete an order
+
+### Get All Customers
+#### `GET` /api/customers
+Return an array of `Customer` objects
+#### Response example
+```json
+[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@doe.com",
+        "phone": "+47 99 88 77 66"
+    },
+    {
+        "id": 2,
+        "name": "Jane Doe",
+        "email": "jane@doe.com",
+        "phone": "+47 45 23 44 87"
+    }
+]
+```
+
+### Get Customer
+#### `GET` /api/customers/{id}
+Returns a single `Customer` object
+#### Response example
+```json
+{
+    "id": 2,
+    "name": "Jane Doe",
+    "email": "jane@doe.com",
+    "phone": "+47 45 23 44 87"
+}
+```
+
+### Insert Customer
+#### `POST` /api/customers
+Create a new `Customer`
 #### JSON parameters
-| FIELD | TYPE | DESCRIPTION | REQUIRED |
-| ----- | ---- | ----------- | -------- |
-| id    | long | Order id    | true     |
+| FIELD       | TYPE     | DESCRIPTION |
+| ----------- | -------- | ----------- |
+| name        | string   | ........... |
+| email       | string   | ........... |
+| phone       | string   | ........... |
+
+### Modify Customer
+#### `PUT` /api/customers/{id}
+Modify a `Customer`
+#### JSON parameters
+| FIELD       | TYPE     | DESCRIPTION |
+| ----------- | -------- | ----------- |
+| id          | int      | ........... |
+| name        | string   | ........... |
+| email       | string   | ........... |
+| phone       | string   | ........... |
+
+
+### Delete Customer
+#### `DELETE` /api/customers/{id}
+Delete a customer
 
 # Angular
 ## Development server
