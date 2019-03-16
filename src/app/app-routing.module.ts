@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AllComponent } from './order/all/all.component';
-import { SingleComponent } from './order/single/single.component';
-import { NewComponent } from './order/new/new.component';
+import { AllOrdersComponent } from './order/all-orders/all-orders.component';
+import { NewOrderComponent } from './order/new-order/new-order.component';
 import { AllCustomersComponent } from './customer/all-customers/all-customers.component';
+import { SingleOrderComponent } from './order/single-order/single-order.component';
 
 const routes: Routes = [
   {
@@ -13,15 +13,15 @@ const routes: Routes = [
   },
   {
     path: 'order/:id',
-    component: SingleComponent
+    component: SingleOrderComponent
   },
   {
     path: 'orders',
-    component: AllComponent
+    component: AllOrdersComponent
   },
   {
     path: 'orders/new',
-    component: NewComponent
+    component: NewOrderComponent
   },
 
   {
