@@ -17,10 +17,10 @@
         <td>{{customer.name}}</td>
         <td><a href="mailto:{{customer.email}}">{{customer.email}}</a></td>
         <td><a href="tel:{{customer.phone}}">{{customer.phone}}</a></td>
-        <td><code>COMING</code></td>
+        <td><code>UNDER DEVELOPMENT</code></td>
         <td>
           <div class="btn-group btn-group-sm">
-              <a class="btn btn-info" [routerLink]="[ '/customers/', customer.id ]">Details</a>
+              <a class="btn btn-info" [routerLink]="[ '/customers/view/', customer.id ]">Details</a>
               <a class="btn btn-warning" [routerLink]="[ '/customers/update/', customer.id ]">Update</a>
               <a class="btn btn-danger" [routerLink]="[ '/customers/delete/', customer.id ]">Delete</a>
           </div>
