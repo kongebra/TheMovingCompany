@@ -1,5 +1,5 @@
 import { Eservice } from './eservice.enum';
-import { Custsomer } from '../customer/custsomer';
+import { Customer } from '../customer/customer';
 
 export class Order {
     id: number
@@ -10,5 +10,5 @@ export class Order {
     service: Eservice
     note: string
     customerId: number
-    customer: Custsomer
+    customer: Customer
 }
