@@ -22,12 +22,11 @@ export class SingleCustomerComponent implements OnInit {
 	ngOnInit() {
 		let id = this.route.snapshot.params.id
 		this.getCustomer(id);
-		this.getOrders();
 	}
 
 	getCustomer(id) {
 		this.customerService.getCustomer(id).subscribe(customer => this.customer = customer, err => console.error(err), () => {
-			// Finished
+			this.getOrders();
 		});
 	}
 
