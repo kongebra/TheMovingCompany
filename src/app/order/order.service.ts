@@ -17,7 +17,7 @@ export class OrderService {
 		return this.http.get<Order[]>(this.url);
 	}
 
-	getOrder(id: number): Observable<Order> {
+	getOrder(id): Observable<Order> {
 		return this.http.get<Order>(this.url + `/${id}`);
 	}
 
@@ -25,11 +25,11 @@ export class OrderService {
 		return this.http.post(this.url, order);
 	}
 
-	putOrder(id: number, order: Order): Observable<any> {
+	putOrder(id, order: Order): Observable<any> {
 		return this.http.put(this.url + `/${id}`, order);
 	}
 
-	deleteOrder(id: number): Observable<any> {
+	deleteOrder(id): Observable<any> {
 		return this.http.delete(this.url + `/${id}`);
 	}
 }
