@@ -29,7 +29,7 @@ export class OrderService {
 		return this.http.put(this.url + `/${id}`, order);
 	}
 
-	deleteOrder(id): Observable<any> {
-		return this.http.delete(this.url + '/' + id);
+	deleteOrder(id: number): Observable<any> {
+		return this.http.delete(this.url + `/${id}`);
 	}
 }
