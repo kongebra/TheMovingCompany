@@ -4,16 +4,22 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { NewComponent } from './order/new/new.component';
+import { UpdateComponent } from './order/update/update.component';
+import { AllComponent } from './order/all/all.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NewComponent,
+    UpdateComponent,
+    AllComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
