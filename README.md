@@ -1,16 +1,21 @@
 # The Moving Company
 
-# Usage
-## Steps
+## Usage
+
+### Steps
+
 1. Build Angular application: `ng build`
 2. Run .NET application `dotnet run`
 3. Open browser and go to https://localhost:5001
 
-# Known bugs
+## Known bugs
+
 - [ ] Count of orders per customer on `/customers` goes to 0 if you go to `/customers` then to another page, then back. Not sure what causes this.
 
-# Choices for the exercises
-## Day 1
+## Choices for the exercises
+
+### Day 1
+
 I haven't done any programming with .NET before, so it was brand new to me. I have been looking at a few tutorials and docs for this exercise, but I choose to follow the documents on APS.NET from Microsoft ([link](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-2.2&tabs=visual-studio-code)). As it was pretty simple, and did the tasks I needed it to do.
 
 These documentation was straight forward. And I am familiar to the MVC architecture so this went very good. Also familiar with C# from some Unity programming, and OOP-princibles from school (Java, C++, C#).
@@ -21,25 +26,29 @@ Not too known with the inside of Angular, but have read a few tutorials over the
 
 Added Bootstrap as stying for the front-end application as I am very comfortable with this toolkit.
 
+### Day 2
 
-
-## Day 2
 Added `Customer` to the API so with the same functions as Orders. So the front-end application would make more sense.
 
 Have been working primarly with Angular, to learn the framework more, and get more comfortable with it.
+
+### Day 3
+
 ### TODO
+
 - [ ] Need to read up on converting HTML `date` to `DateTime` objects in the REST API.
 - [ ] Check if customer exists before creating new order in the API
 
-## Day 3
+## API
 
-# API 
-## Requests
-### API Information
-### Get All Orders
+### Requests
+
 #### `GET` /api/orders
+
 Returns an array of `Order` objects.
-#### Response example
+
+##### Response example
+
 ```json
 [
     {
@@ -54,10 +63,13 @@ Returns an array of `Order` objects.
     }
 ]
 ```
-### Get Order
+
 #### `GET` /api/orders/{id}
+
 Returns a single `Order` object
-#### Response example
+
+##### Response example
+
 ```json
 {
     "id": 1,
@@ -70,10 +82,13 @@ Returns a single `Order` object
     "customerId": 1,
 }
 ```
-### Add Order
+
 #### `POST` /api/orders
+
 Create a new order
-#### JSON parameters
+
+##### JSON parameters
+
 | FIELD       | TYPE     | DESCRIPTION |
 | ----------- | -------- | ----------- |
 | addressFrom | string   | ........... |
@@ -84,10 +99,12 @@ Create a new order
 | note        | string   | ........... |
 | customer    | Customer | ........... |
 
-### Modify Order
 #### `PUT` /api/orders/{id}
+
 Modify an order
-#### JSON parameters
+
+##### JSON parameters
+
 | FIELD       | TYPE     | DESCRIPTION |
 | ----------- | -------- | ----------- |
 | addressFrom | string   | ........... |
@@ -98,14 +115,16 @@ Modify an order
 | note        | string   | ........... |
 | customer    | Customer | ........... |
 
-### Delete Order
 #### `DELETE` /api/orders/{id}
-Delete an order
 
-### Get All Customers
+Delete an order by the id given in the URL
+
 #### `GET` /api/customers
+
 Return an array of `Customer` objects
-#### Response example
+
+##### Response example
+
 ```json
 [
     {
@@ -123,10 +142,12 @@ Return an array of `Customer` objects
 ]
 ```
 
-### Get Customer
 #### `GET` /api/customers/{id}
+
 Returns a single `Customer` object
-#### Response example
+
+##### Response example
+
 ```json
 {
     "id": 2,
@@ -136,20 +157,24 @@ Returns a single `Customer` object
 }
 ```
 
-### Insert Customer
 #### `POST` /api/customers
+
 Create a new `Customer`
-#### JSON parameters
+
+##### JSON parameters
+
 | FIELD       | TYPE     | DESCRIPTION |
 | ----------- | -------- | ----------- |
 | name        | string   | ........... |
 | email       | string   | ........... |
 | phone       | string   | ........... |
 
-### Modify Customer
 #### `PUT` /api/customers/{id}
+
 Modify a `Customer`
-#### JSON parameters
+
+##### JSON parameters
+
 | FIELD       | TYPE     | DESCRIPTION |
 | ----------- | -------- | ----------- |
 | id          | int      | ........... |
@@ -157,32 +182,37 @@ Modify a `Customer`
 | email       | string   | ........... |
 | phone       | string   | ........... |
 
-
-### Delete Customer
 #### `DELETE` /api/customers/{id}
-Delete a customer
 
-# Angular
-## Development server
+Delete a customer by the id given in the URL
+
+##### URL parameters
+| FIELD | TYPE | REQUIRED |
+| ----- | ---- | -------- |
+| id    | int  | true     |
+
+## Angular
+
+### Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+### Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+### Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+### Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+### Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
+### Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
