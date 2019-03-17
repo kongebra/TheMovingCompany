@@ -119,6 +119,12 @@ Modify an order
 
 Delete an order by the id given in the URL
 
+##### URL parameters
+
+| FIELD | TYPE | REQUIRED |
+| ----- | ---- | -------- |
+| id    | int  | true     |
+
 #### `GET` /api/customers
 
 Return an array of `Customer` objects
@@ -187,6 +193,7 @@ Modify a `Customer`
 Delete a customer by the id given in the URL
 
 ##### URL parameters
+
 | FIELD | TYPE | REQUIRED |
 | ----- | ---- | -------- |
 | id    | int  | true     |
